@@ -1,0 +1,23 @@
+[build-system]
+requires = ["hatchling >= 1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "commonspider_nococli"
+version = "0.1"
+authors = [
+  { name="Common Spider", email="commonspider@proton.me" },
+]
+description = "NocoCLI"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "GPL-3.0"
+license-files = ["LICENSE"]
+
+[project.urls]
+Homepage = "https://github.com/commonspider/nococtl"
+Issues = "https://github.com/commonspider/nococtl/issues"
