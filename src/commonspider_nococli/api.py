@@ -67,11 +67,11 @@ class API:
         data = data or {}
         endpoint = urljoin(self._base_url, endpoint.format(**data))
         path_vars = [fn for _, fn, _, _ in Formatter().parse(endpoint) if fn is not None]
-        data = {name: value for name, value in data.items() if name not in path_vars}
+        data = {name: value for name, value in data.items() if name not in path_vars and value is not None}
         response = self._session.request(
             method=method,
             url=endpoint,
-            json=data,
+            params=data,
             headers={"xc-token": self._api_token}
         )
         content = response.json()
@@ -88,5 +88,5 @@ class API:
         ...
 
     @api("GET", "/api/v2/tables/{table_id}/records")
-    def list_table_records(self, *, table_id: str) -> TableRecords:
+    def list_table_records(self, *, table_id: str, offset: int = None, limit: int = None, where: str = None) -> TableRecords:
         ...
