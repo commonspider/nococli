@@ -25,15 +25,17 @@ api = API(**config)
 if args.command == "list-bases":
     response = api.list_bases()
     df = DataFrame(response["list"])
-    print(df[["id", "title"]])
+    print(df[["id", "title", "type"]])
 
 elif args.command == "dump-base":
     data = {}
     for table in api.list_tables(base_id=args.base_id)["list"]:
+        if table["type"] != "table":
+            continue
         records = api.list_table_records(table_id=table["id"])["list"]
         for record in records:
-            del record["CreatedAt"]
-            del record["UpdatedAt"]
+            record.pop("CreatedAt", None)
+            record.pop("UpdatedAt", None)
         data[table["title"]] = records
     print(json.dumps(data, indent=2))
 

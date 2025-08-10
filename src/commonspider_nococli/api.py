@@ -45,6 +45,7 @@ class Table(TypedDict):
     base_id: str
     table_name: str
     title: str
+    type: str
 
 
 class TablesList(TypedDict):
@@ -73,8 +74,10 @@ class API:
             json=data,
             headers={"xc-token": self._api_token}
         )
-        response.raise_for_status()
-        return response.json()
+        content = response.json()
+        if response.status_code != 200:
+            raise Exception(content)
+        return content
 
     @api("GET", "/api/v2/meta/bases")
     def list_bases(self) -> TablesList:
